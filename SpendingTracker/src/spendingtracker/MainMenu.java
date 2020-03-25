@@ -179,6 +179,11 @@ public class MainMenu extends javax.swing.JFrame {
         Data.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Data.setIconTextGap(0);
         Data.setMinimumSize(new java.awt.Dimension(0, 0));
+        Data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataActionPerformed(evt);
+            }
+        });
         TopInnerPanel.add(Data);
 
         javax.swing.GroupLayout TopPanelLayout = new javax.swing.GroupLayout(TopPanel);
@@ -246,6 +251,11 @@ public class MainMenu extends javax.swing.JFrame {
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
+
+    private void DataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataActionPerformed
+        Data Data = new Data();
+        Data.setVisible(true);
+    }//GEN-LAST:event_DataActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

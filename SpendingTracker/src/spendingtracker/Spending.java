@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -34,6 +35,9 @@ public class Spending extends javax.swing.JFrame {
      */
     public Spending() {
         initComponents();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();   
+        tf1.setValue(date);
     }
 
     /**
@@ -76,7 +80,7 @@ public class Spending extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancel");
+        jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -202,14 +206,13 @@ public class Spending extends javax.swing.JFrame {
     }//GEN-LAST:event_tfActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Date date = new Date();
 				
         try {
             FileWriter writer = new FileWriter("spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
             StringBuilder sb = new StringBuilder();
             sb.append(tf.getText());
             sb.append(',');
-            sb.append(df.format(date));
+            sb.append(df.format(tf1.getValue()));
             sb.append('\n');
             
 
