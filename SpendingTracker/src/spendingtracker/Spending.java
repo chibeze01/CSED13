@@ -5,12 +5,21 @@
  */
 package spendingtracker;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -195,8 +204,23 @@ public class Spending extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Date date = new Date();
 				
-	System.out.println(tf.getText() + ", date: " + df.format(date));
-	tf.setText("£");
+        try {
+            FileWriter writer = new FileWriter("spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
+            StringBuilder sb = new StringBuilder();
+            sb.append(tf.getText());
+            sb.append(',');
+            sb.append(df.format(date));
+            sb.append('\n');
+            
+
+            writer.write(sb.toString());
+            writer.close();
+          } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+          } catch (IOException e){
+              System.out.println(e);
+          }
+        tf.setText("£");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
