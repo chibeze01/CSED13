@@ -256,6 +256,11 @@ public class MainMenu extends javax.swing.JFrame {
         Data Data = new Data();
         Data.setVisible(true);
     }//GEN-LAST:event_DataActionPerformed
+    
+    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+        Help help = new help();
+        help.setVisible(true);
+    }//GEN-LAST:event_HelpActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
