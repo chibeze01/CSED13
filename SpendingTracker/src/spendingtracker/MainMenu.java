@@ -97,6 +97,11 @@ public class MainMenu extends javax.swing.JFrame {
         Configure.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Configure.setIconTextGap(0);
         Configure.setMinimumSize(new java.awt.Dimension(0, 0));
+        Configure.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfigureActionPerformed(evt);
+            }
+        });
         BottomInnerPanel.add(Configure);
 
         Help.setBackground(new java.awt.Color(204, 204, 204));
@@ -261,6 +266,11 @@ public class MainMenu extends javax.swing.JFrame {
         Help help = new Help();
         help.setVisible(true);
     }//GEN-LAST:event_HelpActionPerformed
+
+    private void ConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfigureActionPerformed
+        Configure configure = new Configure();
+        configure.setVisible(true);
+    }//GEN-LAST:event_ConfigureActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

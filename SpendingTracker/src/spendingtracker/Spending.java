@@ -63,6 +63,11 @@ public class Spending extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         tf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         tf.setText("£");
@@ -257,6 +262,32 @@ public class Spending extends javax.swing.JFrame {
     private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CategoryBoxActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // When shown, we want to add all categories to selection
+        try {
+            // create file reader to read bytes, and buffered reader to read lines
+            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
+            
+            // while there is still data...
+            String lineRead; 
+             
+            // clear the category box
+            CategoryBox.removeAllItems();
+             
+            // while there is data to be read from file..
+            while ((lineRead = reader.readLine()) != null){
+                // add each new category
+                CategoryBox.addItem(lineRead);
+            }
+            // close buffered reader
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e){
+              System.out.println(e);
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
