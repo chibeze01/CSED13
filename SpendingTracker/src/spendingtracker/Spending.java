@@ -59,10 +59,15 @@ public class Spending extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tf1 = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        CategoryBox = new javax.swing.JComboBox<>();
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         tf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         tf.setText("£");
@@ -138,7 +143,12 @@ public class Spending extends javax.swing.JFrame {
         jLabel5.setText("Date");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category 1", "Category 2" }));
+        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category 1", "Category 2" }));
+        CategoryBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoryBoxActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Money going into account");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +178,7 @@ public class Spending extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CategoryBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tf1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -189,7 +199,7 @@ public class Spending extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CategoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -208,14 +218,25 @@ public class Spending extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 				
         try {
+            // create file writer to write to, and a string builder to build string to write to file
             FileWriter writer = new FileWriter("spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
             StringBuilder sb = new StringBuilder();
+            
+            // get amount spent in £ text
             sb.append(tf.getText());
             sb.append(',');
+            
+            // get the date and format it,
             sb.append(df.format(tf1.getValue()));
+            sb.append(',');
+            
+            // finally get the category that was entered
+            sb.append(CategoryBox.getItemAt(CategoryBox.getSelectedIndex()));
+            
+            // create new line for next entry
             sb.append('\n');
             
-
+            // use file writer to write string to file
             writer.write(sb.toString());
             writer.close();
           } catch (FileNotFoundException e) {
@@ -237,6 +258,36 @@ public class Spending extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CategoryBoxActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // When shown, we want to add all categories to selection
+        try {
+            // create file reader to read bytes, and buffered reader to read lines
+            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
+            
+            // while there is still data...
+            String lineRead; 
+             
+            // clear the category box
+            CategoryBox.removeAllItems();
+             
+            // while there is data to be read from file..
+            while ((lineRead = reader.readLine()) != null){
+                // add each new category
+                CategoryBox.addItem(lineRead);
+            }
+            // close buffered reader
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e){
+              System.out.println(e);
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
@@ -268,10 +319,10 @@ public class Spending extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CategoryBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
