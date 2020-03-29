@@ -37,7 +37,7 @@ public class Spending extends javax.swing.JFrame {
         initComponents();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();   
-        tf1.setValue(date);
+        tf1.setValue(date); //fill box with current date
     }
 
     /**
@@ -223,7 +223,15 @@ public class Spending extends javax.swing.JFrame {
             StringBuilder sb = new StringBuilder();
             
             // get amount spent in £ text
-            sb.append(tf.getText());
+            var spent = tf.getText();
+            if(spent.length() == 0){ //prevents empty amounts being added
+                return;
+            } else if(spent.charAt(0) == '£'){
+                spent = spent.substring(1);
+            }
+            spent = spent.replace(",", "");
+            System.out.println(spent);
+            sb.append(spent);
             sb.append(',');
             
             // get the date and format it,
