@@ -34,7 +34,7 @@ public class lineGraph extends javax.swing.JFrame {
                 // use comma as separator
                 String[] item = line.split(",");
 
-                dataset.addValue(Double.valueOf(item[0].substring(1)), "category" , item[1]);
+                dataset.addValue(Double.valueOf(item[0]), "category" , item[1]);
 
             }
         } catch (FileNotFoundException e) {

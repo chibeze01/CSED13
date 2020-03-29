@@ -70,6 +70,7 @@ public class Data extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         spendingList = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
+        lineGph = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,6 +88,13 @@ public class Data extends javax.swing.JFrame {
             }
         });
 
+        lineGph.setText("Generate Line Graph");
+        lineGph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lineGphActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,7 +104,9 @@ public class Data extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 477, Short.MAX_VALUE)
+                        .addGap(0, 332, Short.MAX_VALUE)
+                        .addComponent(lineGph)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -106,7 +116,9 @@ public class Data extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(lineGph))
                 .addContainerGap())
         );
 
@@ -116,6 +128,11 @@ public class Data extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void lineGphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineGphActionPerformed
+        lineGraph lineGraph = new lineGraph();
+        lineGraph.setVisible(true);
+    }//GEN-LAST:event_lineGphActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,6 +175,7 @@ public class Data extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lineGph;
     private javax.swing.JList<String> spendingList;
     // End of variables declaration//GEN-END:variables
 }
