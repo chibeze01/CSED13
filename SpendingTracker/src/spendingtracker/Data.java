@@ -30,13 +30,13 @@ public class Data extends javax.swing.JFrame {
 
             br = new BufferedReader(new FileReader("spending.csv"));
             ArrayList<String> data = new ArrayList<String>();
-            data.add("Date           Amount");
+            data.add("Date           Amount  Category");
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
                 String[] item = line.split(",");
 
-                data.add(item[1] + "    " + item[0]);
+                data.add(item[1] + "    " + item[0] + "    " + item[2]);
 
             }
             String[] dataList = new String[ data.size() ];
