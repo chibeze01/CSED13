@@ -21,13 +21,16 @@ import javax.swing.table.DefaultTableModel;
  * @author adam-
  */
 public class Data extends javax.swing.JFrame {
+    
+    private MainMenu main;
 
     /**
      * Creates new form Spending
      */
-    public Data() {
+    public Data(MainMenu main) {
         initComponents();
         loadTable();
+        this.main = main;
     }
 
     /**
@@ -182,6 +185,8 @@ public class Data extends javax.swing.JFrame {
     }
     
     private void removeSpendingEntry(int index){
+        DecimalFormat FORMAT = new DecimalFormat("0.00");
+        
         try {
             BufferedReader br = new BufferedReader(new FileReader("spending.csv"));
             String stringToWrite = "";
@@ -201,7 +206,7 @@ public class Data extends javax.swing.JFrame {
                     stringToWrite = stringToWrite + parts[0] + "," + parts[1] + "," + parts[2] + ",";
                     
                     // modify balance
-                    DecimalFormat FORMAT = new DecimalFormat("0.00");
+                    
                     // get new balance
                     Double total = Double.parseDouble(parts[3]) + balanceChange;
                     
@@ -217,7 +222,7 @@ public class Data extends javax.swing.JFrame {
             }
             
             
-             // create file writer, set append to FALSE, as we want to overwrite
+            // create file writer, set append to FALSE, as we want to overwrite
             FileWriter writer = new FileWriter("spending.csv", false);
             
             // write string to file
@@ -225,6 +230,26 @@ public class Data extends javax.swing.JFrame {
             
             // close writer
             writer.close();
+            
+            
+            
+            br = new BufferedReader(new FileReader("balance.csv"));
+            
+            String oldBalance = br.readLine();
+            
+            String newBalance = FORMAT.format(Double.parseDouble(oldBalance) + balanceChange);
+            
+            // create file writer, set append to FALSE, as we want to overwrite
+            writer = new FileWriter("balance.csv", false);
+            
+            // write updated balance
+            writer.write(newBalance);
+            
+            // close writer
+            writer.close();
+            
+            // update main menu
+            main.updateBalance();
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -254,43 +279,6 @@ public class Data extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lineGph1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Data.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Data.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Data.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Data.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Data().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
