@@ -258,8 +258,8 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitActionPerformed
 
     private void DataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataActionPerformed
-        security Security = new security();
-        Security.setVisible(true);
+        Data data = new Data();
+        data.setVisible(true);
     }//GEN-LAST:event_DataActionPerformed
     
     private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
