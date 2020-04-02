@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -28,16 +29,18 @@ import java.util.logging.Logger;
  */
 public class Spending extends javax.swing.JFrame {
     
-    Format currency = NumberFormat.getCurrencyInstance(Locale.UK);
+    private MainMenu main;
+    
     DateFormat df = new SimpleDateFormat("dd/MM/yy");
     /**
      * Creates new form Spending
      */
-    public Spending() {
+    public Spending(MainMenu main) {
         initComponents();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();   
         tf1.setValue(date); //fill box with current date
+        this.main = main;
     }
 
     /**
@@ -60,7 +63,7 @@ public class Spending extends javax.swing.JFrame {
         tf1 = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         CategoryBox = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        MoneyIn = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -150,10 +153,10 @@ public class Spending extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setText("Money going into account");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        MoneyIn.setText("Money going into account");
+        MoneyIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                MoneyInActionPerformed(evt);
             }
         });
 
@@ -176,7 +179,7 @@ public class Spending extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
+                    .addComponent(MoneyIn)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(CategoryBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tf1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +195,7 @@ public class Spending extends javax.swing.JFrame {
                     .addComponent(tf, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(MoneyIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,6 +218,11 @@ public class Spending extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tfActionPerformed
 
+    private void modifyBalance(String value){
+        
+    }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 				
         try {
@@ -230,6 +238,15 @@ public class Spending extends javax.swing.JFrame {
                 spent = spent.substring(1);
             }
             spent = spent.replace(",", "");
+            
+            if (!MoneyIn.isSelected()){
+                // if money is coming out make it negative
+                spent = "-" + spent;
+            }
+            
+            this.modifyBalance(spent);
+            main.updateBalance();
+            
             System.out.println(spent);
             sb.append(spent);
             sb.append(',');
@@ -263,9 +280,9 @@ public class Spending extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf1ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void MoneyInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoneyInActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_MoneyInActionPerformed
 
     private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
         // TODO add your handling code here:
@@ -297,40 +314,12 @@ public class Spending extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formComponentShown
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Spending.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Spending().setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CategoryBox;
+    private javax.swing.JCheckBox MoneyIn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

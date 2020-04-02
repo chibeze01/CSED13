@@ -21,6 +21,8 @@ public class SpendingTracker {
         // load up main menu
         MainMenu menu = new MainMenu();
         menu.setVisible(true);
+        
+        menu.updateBalance();
     }
 
 }
