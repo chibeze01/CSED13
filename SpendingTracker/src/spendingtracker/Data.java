@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,14 +81,14 @@ public class Data extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Amount", "Category"
+                "Date", "Amount", "Category", "Balance"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -162,7 +163,7 @@ public class Data extends javax.swing.JFrame {
                 // use comma as separator
                 String[] item = line.split(",");
 
-                tableModel.addRow(new Object[]{item[1], item[0], item[2]});
+                tableModel.addRow(new Object[]{item[1], item[0], item[2], item[3]});
             }
 
         } catch (FileNotFoundException e) {
@@ -188,12 +189,28 @@ public class Data extends javax.swing.JFrame {
             String line;
             
             int i = 0;
+            double balanceChange = 0;
             
             while ((line = br.readLine()) != null){
                 
                 // if not the entry we want to remove, then add to string
-                if (i != index){
+                if (i > index){
+                    // if i greater than index, modify balance
+                    String[] parts = line.split(",");
+                    
+                    stringToWrite = stringToWrite + parts[0] + "," + parts[1] + "," + parts[2] + ",";
+                    
+                    // modify balance
+                    DecimalFormat FORMAT = new DecimalFormat("0.00");
+                    // get new balance
+                    Double total = Double.parseDouble(parts[3]) + balanceChange;
+                    
+                    stringToWrite = stringToWrite + FORMAT.format(total) + "\n";
+                    
+                }else if (i != index){
                     stringToWrite = stringToWrite + line + "\n";
+                } else{
+                    balanceChange = -1*Double.parseDouble(line.split(",")[0]);
                 }
                 
                 i++;

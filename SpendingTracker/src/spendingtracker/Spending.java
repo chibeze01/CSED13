@@ -218,18 +218,8 @@ public class Spending extends javax.swing.JFrame {
     private void tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfActionPerformed
         
     }//GEN-LAST:event_tfActionPerformed
-    
-    private String addBalances(int[] PoundPence1, int[] PoundPence2){
-        DecimalFormat FORMAT = new DecimalFormat("0.00");
         
-        double value1 = PoundPence1[0] + (((double) PoundPence1[1])/100);
-        
-        double value2 = PoundPence2[0] + (((double) PoundPence2[1])/100);
-        
-        return FORMAT.format(value1 + value2);
-    }
-    
-    private void modifyBalance(String value){
+    private String modifyBalance(String value){
         try{
             // create file reader to read bytes, and buffered reader to read lines
             BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
@@ -248,12 +238,15 @@ public class Spending extends javax.swing.JFrame {
             writer.write(total);
             writer.close();
             
+            return total;
+            
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e){
             System.out.println(e);
         }
         
+        return "0.00";
     }
     
     
@@ -278,7 +271,7 @@ public class Spending extends javax.swing.JFrame {
                 spent = "-" + spent;
             }
             
-            this.modifyBalance(spent);
+            String newBalance = this.modifyBalance(spent);
             main.updateBalance();
             
             System.out.println(spent);
@@ -289,8 +282,12 @@ public class Spending extends javax.swing.JFrame {
             sb.append(df.format(tf1.getValue()));
             sb.append(',');
             
-            // finally get the category that was entered
+            // get the category that was entered
             sb.append(CategoryBox.getItemAt(CategoryBox.getSelectedIndex()));
+            sb.append(',');
+            
+            // add in current balance
+            sb.append(newBalance);
             
             // create new line for next entry
             sb.append('\n');
