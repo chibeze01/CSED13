@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -217,8 +218,41 @@ public class Spending extends javax.swing.JFrame {
     private void tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfActionPerformed
         
     }//GEN-LAST:event_tfActionPerformed
-
+    
+    private String addBalances(int[] PoundPence1, int[] PoundPence2){
+        DecimalFormat FORMAT = new DecimalFormat("0.00");
+        
+        double value1 = PoundPence1[0] + (((double) PoundPence1[1])/100);
+        
+        double value2 = PoundPence2[0] + (((double) PoundPence2[1])/100);
+        
+        return FORMAT.format(value1 + value2);
+    }
+    
     private void modifyBalance(String value){
+        try{
+            // create file reader to read bytes, and buffered reader to read lines
+            BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
+            String balance = reader.readLine();
+
+            double balancePoundsPence = Double.parseDouble(balance);
+            double newPoundsPence = Double.parseDouble(value);
+            
+            DecimalFormat FORMAT = new DecimalFormat("0.00");
+
+            String total = FORMAT.format(balancePoundsPence + newPoundsPence);
+            
+            FileWriter writer = new FileWriter("balance.csv", false);
+            
+            // use file writer to write string to file
+            writer.write(total);
+            writer.close();
+            
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e){
+            System.out.println(e);
+        }
         
     }
     
