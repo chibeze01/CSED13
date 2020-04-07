@@ -52,7 +52,7 @@ public class security extends javax.swing.JFrame {
         jPasswordField3 = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +61,7 @@ public class security extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Enter a security pin");
+        jLabel1.setText("Create a security pin");
 
         jLabel2.setText("Confirm security pin");
 
@@ -221,8 +221,9 @@ public class security extends javax.swing.JFrame {
             jPasswordField2.setText("");
             setVisible(false);
             
-            Data data = new Data();
-            data.setVisible(true);
+            MainMenu menu = new MainMenu();
+            menu.setVisible(true);
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -240,8 +241,8 @@ public class security extends javax.swing.JFrame {
             jPasswordField2.setText("");
             setVisible(false);
             
-            Data data = new Data();
-            data.setVisible(true);
+            MainMenu menu = new MainMenu();
+            menu.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
