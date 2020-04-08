@@ -5,6 +5,8 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,8 +31,10 @@ public class Data extends javax.swing.JFrame {
      */
     public Data(MainMenu main) {
         initComponents();
-        loadTable();
         this.main = main;
+        loadTable();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -148,14 +152,11 @@ public class Data extends javax.swing.JFrame {
     
     private void loadTable(){
         
-        
-        
-        BufferedReader br = null;
         String line = "";
-        
+        BufferedReader br = null;
+         
         try {
-
-            br = new BufferedReader(new FileReader("spending.csv"));
+            br = new BufferedReader(new FileReader(main.userName + "spending.csv"));
             DefaultTableModel tableModel = (DefaultTableModel) spendingTable.getModel();
             
             // clear rows
@@ -168,19 +169,14 @@ public class Data extends javax.swing.JFrame {
 
                 tableModel.addRow(new Object[]{item[1], item[0], item[2], item[3]});
             }
+            
+            br.close();
 
         } catch (FileNotFoundException e) {
+            System.out.print("not found");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
     
@@ -188,7 +184,7 @@ public class Data extends javax.swing.JFrame {
         DecimalFormat FORMAT = new DecimalFormat("0.00");
         
         try {
-            BufferedReader br = new BufferedReader(new FileReader("spending.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(main.userName + "spending.csv"));
             String stringToWrite = "";
             
             String line;
@@ -223,7 +219,7 @@ public class Data extends javax.swing.JFrame {
             
             
             // create file writer, set append to FALSE, as we want to overwrite
-            FileWriter writer = new FileWriter("spending.csv", false);
+            FileWriter writer = new FileWriter(main.userName + "spending.csv", false);
             
             // write string to file
             writer.write(stringToWrite);
@@ -233,14 +229,14 @@ public class Data extends javax.swing.JFrame {
             
             
             
-            br = new BufferedReader(new FileReader("balance.csv"));
+            br = new BufferedReader(new FileReader(main.userName + "balance.csv"));
             
             String oldBalance = br.readLine();
             
             String newBalance = FORMAT.format(Double.parseDouble(oldBalance) + balanceChange);
             
             // create file writer, set append to FALSE, as we want to overwrite
-            writer = new FileWriter("balance.csv", false);
+            writer = new FileWriter(main.userName + "balance.csv", false);
             
             // write updated balance
             writer.write(newBalance);
@@ -264,7 +260,7 @@ public class Data extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lineGphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineGphActionPerformed
-        lineGraph lineGraph = new lineGraph();
+        lineGraph lineGraph = new lineGraph(main);
         lineGraph.setVisible(true);
     }//GEN-LAST:event_lineGphActionPerformed
 

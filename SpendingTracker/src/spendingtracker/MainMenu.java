@@ -5,6 +5,8 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,11 +19,16 @@ import java.io.IOException;
  */
 public class MainMenu extends javax.swing.JFrame {
 
+    public String userName;
+    
     /**
      * Creates new form MainMenu
      */
-    public MainMenu() {
+    public MainMenu(String userName) {
         initComponents();
+        this.userName = userName;
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -199,6 +206,11 @@ public class MainMenu extends javax.swing.JFrame {
         Goals.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Goals.setIconTextGap(0);
         Goals.setMinimumSize(new java.awt.Dimension(0, 0));
+        Goals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GoalsActionPerformed(evt);
+            }
+        });
         TopInnerPanel.add(Goals);
 
         Data.setBackground(new java.awt.Color(204, 204, 204));
@@ -321,17 +333,22 @@ public class MainMenu extends javax.swing.JFrame {
         configure.setVisible(true);
     }//GEN-LAST:event_ConfigureActionPerformed
 
+    private void GoalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoalsActionPerformed
+        Goals goals = new Goals(this);
+        goals.setVisible(true);
+    }//GEN-LAST:event_GoalsActionPerformed
+
     public void updateBalance() {
         // TODO: update balance using csv file when called
         try{
             // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(this.userName + "balance.csv"));
             
             String line = reader.readLine();
             
             if (line == null){
                 // if null set to £0.00
-                FileWriter writer = new FileWriter("balance.csv", false);
+                FileWriter writer = new FileWriter(this.userName + "balance.csv", false);
             
                 // use file writer to write string to file
                 writer.write("0.00");

@@ -5,6 +5,9 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author adam-
@@ -19,6 +22,8 @@ public class Configure extends javax.swing.JFrame {
     public Configure(MainMenu main) {
         initComponents();
         this.main = main;
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -35,6 +40,7 @@ public class Configure extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -86,6 +92,14 @@ public class Configure extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton5.setText("Change Pin");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,6 +108,7 @@ public class Configure extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -109,7 +124,9 @@ public class Configure extends javax.swing.JFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,12 +134,14 @@ public class Configure extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // open add category page
-        AddCategory addCategory = new AddCategory();
+        AddCategory addCategory = new AddCategory(main);
         addCategory.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // open remove category page
+        RemoveCategory remCategory = new RemoveCategory(main);
+        remCategory.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -131,11 +150,18 @@ public class Configure extends javax.swing.JFrame {
         setBalance.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO open configure securitypin with first time as false
+        SecurityPinConfig pinConfig = new SecurityPinConfig(main.userName, false);
+        pinConfig.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

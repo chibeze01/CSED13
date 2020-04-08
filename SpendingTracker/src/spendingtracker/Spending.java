@@ -5,6 +5,9 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +26,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,6 +46,9 @@ public class Spending extends javax.swing.JFrame {
         Date date = new Date();   
         tf1.setValue(date); //fill box with current date
         this.main = main;
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -220,27 +227,41 @@ public class Spending extends javax.swing.JFrame {
     }//GEN-LAST:event_tfActionPerformed
         
     private String modifyBalance(String value){
-        try{
+        String balance = "0.00";
+        
+        // try and get balance if it exists
+        try {
             // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
-            String balance = reader.readLine();
+            BufferedReader reader = new BufferedReader(new FileReader(main.userName + "balance.csv"));
+            balance = reader.readLine();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e){
+            System.out.println(e);
+        }
+        
+        // calculate new total
+        
+        double balancePoundsPence = Double.parseDouble(balance);
+        double newPoundsPence = Double.parseDouble(value);
 
-            double balancePoundsPence = Double.parseDouble(balance);
-            double newPoundsPence = Double.parseDouble(value);
-            
-            DecimalFormat FORMAT = new DecimalFormat("0.00");
+        DecimalFormat FORMAT = new DecimalFormat("0.00");
 
-            String total = FORMAT.format(balancePoundsPence + newPoundsPence);
+        String total = FORMAT.format(balancePoundsPence + newPoundsPence);
+
+        
+
+       
             
-            FileWriter writer = new FileWriter("balance.csv", false);
-            
+        try{
             // use file writer to write string to file
+            FileWriter writer = new FileWriter(main.userName + "balance.csv", false);
             writer.write(total);
             writer.close();
             
             return total;
             
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {            
             System.out.println(e.getMessage());
         } catch (IOException e){
             System.out.println(e);
@@ -254,7 +275,7 @@ public class Spending extends javax.swing.JFrame {
 				
         try {
             // create file writer to write to, and a string builder to build string to write to file
-            FileWriter writer = new FileWriter("spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
+            FileWriter writer = new FileWriter(main.userName + "spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
             StringBuilder sb = new StringBuilder();
             
             // get amount spent in £ text
@@ -323,22 +344,33 @@ public class Spending extends javax.swing.JFrame {
         // When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
             
             // while there is still data...
             String lineRead; 
              
             // clear the category box
             CategoryBox.removeAllItems();
+            
+            int i = 0;
              
             // while there is data to be read from file..
             while ((lineRead = reader.readLine()) != null){
                 // add each new category
                 CategoryBox.addItem(lineRead);
+                i++;
+            }
+            
+            if (i == 0){
+                // no categories found, can't enter a spending
+                JOptionPane.showMessageDialog(null, "You must create categories before entering spending!");
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }
             // close buffered reader
             reader.close();
         } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "You must create categories before entering spending!");
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             System.out.println(e.getMessage());
         } catch (IOException e){
               System.out.println(e);

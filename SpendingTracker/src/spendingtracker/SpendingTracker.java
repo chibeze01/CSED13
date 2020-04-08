@@ -19,10 +19,9 @@ public class SpendingTracker {
      */
     public static void main(String args[]) {
         // load up main menu
-        MainMenu menu = new MainMenu();
-        menu.setVisible(true);
-        
-        menu.updateBalance();
+        SelectUser userSelect = new SelectUser();
+        userSelect.updateUserList();
+        userSelect.setVisible(true);
     }
 
 }
