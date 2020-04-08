@@ -72,7 +72,7 @@ public class Data extends javax.swing.JFrame {
             }
         });
 
-        lineGph.setText("Generate Line Graph");
+        lineGph.setText("Generate Graph");
         lineGph.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lineGphActionPerformed(evt);
@@ -264,8 +264,8 @@ public class Data extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lineGphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineGphActionPerformed
-        lineGraph lineGraph = new lineGraph();
-        lineGraph.setVisible(true);
+        Graphs graphs = new Graphs();
+        graphs.setVisible(true);
     }//GEN-LAST:event_lineGphActionPerformed
 
     private void lineGph1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineGph1ActionPerformed
