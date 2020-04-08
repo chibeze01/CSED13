@@ -14,13 +14,15 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class SpendingTracker {
     
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        security Security = new security();
-        Security.setVisible(true);
+        // load up main menu
+        MainMenu menu = new MainMenu();
+        menu.setVisible(true);
+        
+        menu.updateBalance();
     }
 
 }
