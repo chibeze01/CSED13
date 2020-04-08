@@ -16,6 +16,7 @@ public class Graphs extends javax.swing.JFrame {
      */
     public Graphs() {
         initComponents();
+        //generate initial line graph
         graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex());
         graphPanel.add(graphGen);
         this.pack();
@@ -42,7 +43,7 @@ public class Graphs extends javax.swing.JFrame {
         typetxt = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 6), new java.awt.Dimension(0, 6), new java.awt.Dimension(32767, 6));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         graphPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         graphPanel.setLayout(new javax.swing.BoxLayout(graphPanel, javax.swing.BoxLayout.LINE_AXIS));
@@ -113,6 +114,7 @@ public class Graphs extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
+        //delete old graph and generates new one
         graphPanel.removeAll();
         graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex());
         graphPanel.add(graphGen);

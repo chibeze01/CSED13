@@ -28,20 +28,24 @@ import org.jfree.data.general.PieDataset;
  */
 public class graphGenerator extends javax.swing.JPanel {
     
+    //makes dataset for line graphs
     private DefaultCategoryDataset getLineData(int colKey){
-      DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+      DefaultCategoryDataset dataset = new DefaultCategoryDataset();
       
       BufferedReader br = null;
         String line = "";
 
         try {
-
+            //open csv file
             br = new BufferedReader(new FileReader("spending.csv"));
             while ((line = br.readLine()) != null) {
 
-                // use comma as separator
+                // store the line as an array
                 String[] item = line.split(",");
                 
+                //if data is in a group already in the graph, add to the group
+                //otherwise add that group to the graph
+                //e.g two spends on one day will be added together rather than one spend overriding the other
                 if(dataset.getColumnKeys().contains(item[colKey])){
                     dataset.incrementValue(Math.abs(Double.valueOf(item[0])), "row" , item[colKey]);
                 }else{
@@ -64,7 +68,7 @@ public class graphGenerator extends javax.swing.JPanel {
         }
       return dataset;
    }
-    
+    //returns dataset for pie charts
     private PieDataset getPieData(int key){
       DefaultPieDataset dataset=new DefaultPieDataset();
       
@@ -73,12 +77,14 @@ public class graphGenerator extends javax.swing.JPanel {
 
         try {
 
-            br = new BufferedReader(new FileReader("spending.csv"));
+            br = new BufferedReader(new FileReader("spending.csv")); //open csv
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
                 String[] item = line.split(",");
                 
+                //add data to dataset
+                //if similar data exists (e.g same category) add onto that category rather than overriding it
                 if(dataset.getKeys().contains(item[key])){
                     double value = dataset.getValue(item[key]).doubleValue() + Math.abs(Double.valueOf(item[0]));
                     dataset.setValue(item[key], value);
@@ -103,6 +109,7 @@ public class graphGenerator extends javax.swing.JPanel {
       return dataset;
    }
     
+    //creates line chart
     private JFreeChart getLineChart(int grouping){
         JFreeChart lineChart = ChartFactory.createLineChart(
         "Spending",
@@ -114,6 +121,7 @@ public class graphGenerator extends javax.swing.JPanel {
         return lineChart;
     }
     
+    //create pie chart
     private JFreeChart getPieChart(int grouping){
         JFreeChart pieChart = ChartFactory.createPieChart(
         "Spending",
@@ -125,6 +133,7 @@ public class graphGenerator extends javax.swing.JPanel {
 
     /**
      * Creates new form graphGenerator
+     * calls the relevant chart generator
      */
     public graphGenerator(int type, int grouping) {
         
