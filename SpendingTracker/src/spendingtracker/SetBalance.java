@@ -5,6 +5,8 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -24,6 +26,8 @@ public class SetBalance extends javax.swing.JFrame {
     public SetBalance(MainMenu main) {
         initComponents();
         this.main = main;
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -114,7 +118,7 @@ public class SetBalance extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO overwrite balance in csv file
         try{
-            FileWriter writer = new FileWriter("balance.csv", false);
+            FileWriter writer = new FileWriter(main.userName + "balance.csv", false);
             
             // get new balance
             String spent = NewBalanceInput.getText();

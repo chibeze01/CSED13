@@ -5,17 +5,37 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author adam-
  */
 public class Goals extends javax.swing.JFrame {
+    
+    private MainMenu main;
 
     /**
      * Creates new form Spending
      */
-    public Goals() {
+    public Goals(MainMenu main) {
         initComponents();
+        this.main = main;
+        //loadTable();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -27,58 +47,190 @@ public class Goals extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        goalsTable = new javax.swing.JTable();
+        removeGoal = new javax.swing.JButton();
+        addGoal = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jButton1.setText("Close");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        goalsTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        goalsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Date Set", "Goal Title", "Amount Required", "Amount Saved", "Weekly Saving Needed", "Date End", "On Target"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        goalsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(goalsTable);
+
+        removeGoal.setText("Remove Selected Goal");
+        removeGoal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeGoalActionPerformed(evt);
+            }
+        });
+
+        addGoal.setText("Add Goal");
+        addGoal.setToolTipText("");
+        addGoal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGoalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(addGoal)
+                        .addGap(18, 18, 18)
+                        .addComponent(removeGoal)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 366, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(removeGoal)
+                    .addComponent(addGoal))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Goals.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Goals.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Goals.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Goals.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private int countWeeksBetween(LocalDate startDate, LocalDate endDate){
+        int weeksBetween = 1;
+        
+        
+        // while start date is before the end date...
+        while (startDate.isBefore(endDate)){
+            // add a week then check if start date passes end date
+            startDate = startDate.plusWeeks(1);
+            weeksBetween++;
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Goals().setVisible(true);
-            }
-        });
+        
+        return weeksBetween;
     }
+    
+    private void loadTable(){
+        
+        String line = "";
+        BufferedReader br = null;
+         
+        try {
+            br = new BufferedReader(new FileReader(main.userName + "goals.csv"));
+            DefaultTableModel tableModel = (DefaultTableModel) goalsTable.getModel();
+            
+            // clear rows
+            tableModel.setRowCount(0);
+            
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] item = line.split(",");
+                
+                String dateSet = item[0];
+                String title = item[1];
+                String amountTotal = item[2];
+                String amountSaved = item[3];
+                String weeklySaving = item[4];
+                String dateEnd = item[5];
+                
+                LocalDate parsedStartDate = LocalDate.parse(dateSet);
+                LocalDate todayDate = LocalDate.now();
+                
+                
+                
+                int weeksPassed = countWeeksBetween(parsedStartDate, todayDate);
+                
+                
+                
+                tableModel.addRow(new Object[]{item[1], item[0], item[2], item[3]});
+            }
+            
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.print("not found");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void removeGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGoalActionPerformed
+        
+    }//GEN-LAST:event_removeGoalActionPerformed
+
+    private void addGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGoalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addGoalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addGoal;
+    private javax.swing.JTable goalsTable;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton removeGoal;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Vanaja/Downloads/CSED13-master/SpendingTracker/src/spendingtracker/Configure.java</file>
-            <file>file:/C:/Users/Vanaja/Downloads/CSED13-master/SpendingTracker/src/spendingtracker/MainMenu.java</file>
-            <file>file:/C:/Users/Vanaja/Downloads/CSED13-master/SpendingTracker/src/spendingtracker/security.java</file>
+            <file>file:/C:/Users/adam-/Documents/GitHub/CSED13/SpendingTracker/src/spendingtracker/MainMenu.java</file>
+            <file>file:/C:/Users/adam-/Documents/GitHub/CSED13/SpendingTracker/src/spendingtracker/Data.java</file>
+            <file>file:/C:/Users/adam-/Documents/GitHub/CSED13/SpendingTracker/src/spendingtracker/Goals.java</file>
+            <file>file:/C:/Users/adam-/Documents/GitHub/CSED13/SpendingTracker/src/spendingtracker/SpendingTracker.java</file>
+            <file>file:/C:/Users/adam-/Documents/GitHub/CSED13/SpendingTracker/src/spendingtracker/lineGraph.java</file>
         </group>
     </open-files>
 </project-private>

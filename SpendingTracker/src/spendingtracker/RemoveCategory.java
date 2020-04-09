@@ -5,6 +5,8 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,11 +20,17 @@ import java.io.IOException;
  */
 public class RemoveCategory extends javax.swing.JFrame {
 
+    private MainMenu main;
+    
     /**
      * Creates new form AddCategory
      */
-    public RemoveCategory() {
+    public RemoveCategory(MainMenu main) {
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        this.main = main;
     }
 
     /**
@@ -109,7 +117,7 @@ public class RemoveCategory extends javax.swing.JFrame {
          // When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
             
             // while there is still data...
             String lineRead; 
@@ -124,16 +132,14 @@ public class RemoveCategory extends javax.swing.JFrame {
             
             // while there is data to be read from file..
             while ((lineRead = reader.readLine()) != null){
-                jLabel1.setText(Integer.toString(i) + " " + Integer.toString(index));
                 if (i != index){
-                    jLabel1.setText("hell");
                     // if not equal to the index, then add to new file
                     stringToWrite += lineRead + "\n";
                 }
                 i++;
             }
             // create file writer, set append to FALSE, as we want to overwrite
-            FileWriter writer = new FileWriter("categories.csv", false);
+            FileWriter writer = new FileWriter(main.userName + "categories.csv", false);
             
             // write string to file
             writer.write(stringToWrite);
@@ -147,7 +153,7 @@ public class RemoveCategory extends javax.swing.JFrame {
             
             // update the combo box with the new categories
             // reset bufferedreader to read from start
-            reader = new BufferedReader(new FileReader("categories.csv"));
+            reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
 
             // clear the category box
             CategoryBox.removeAllItems();
@@ -172,7 +178,7 @@ public class RemoveCategory extends javax.swing.JFrame {
         // When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
             
             // while there is still data...
             String lineRead; 
@@ -194,41 +200,6 @@ public class RemoveCategory extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formComponentShown
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RemoveCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RemoveCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RemoveCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RemoveCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RemoveCategory().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CategoryBox;

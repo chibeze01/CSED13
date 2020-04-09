@@ -10,14 +10,17 @@ package spendingtracker;
  * @author User
  */
 public class Graphs extends javax.swing.JFrame {
+    
+    private MainMenu main;
 
     /**
      * Creates new form Graphs
      */
-    public Graphs() {
+    public Graphs(MainMenu main) {
+        this.main = main;
         initComponents();
         //generate initial line graph
-        graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex());
+        graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex(), this.main);
         graphPanel.add(graphGen);
         this.pack();
     }
@@ -116,45 +119,11 @@ public class Graphs extends javax.swing.JFrame {
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
         //delete old graph and generates new one
         graphPanel.removeAll();
-        graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex());
+        graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex(), this.main);
         graphPanel.add(graphGen);
         this.pack();
     }//GEN-LAST:event_generateBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Graphs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Graphs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Graphs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Graphs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Graphs().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

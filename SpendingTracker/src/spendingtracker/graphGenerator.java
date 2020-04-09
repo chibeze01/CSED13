@@ -28,6 +28,8 @@ import org.jfree.data.general.PieDataset;
  */
 public class graphGenerator extends javax.swing.JPanel {
     
+    private MainMenu main;
+    
     //makes dataset for line graphs
     private DefaultCategoryDataset getLineData(int colKey){
       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -37,7 +39,7 @@ public class graphGenerator extends javax.swing.JPanel {
 
         try {
             //open csv file
-            br = new BufferedReader(new FileReader("spending.csv"));
+            br = new BufferedReader(new FileReader(main.userName + "spending.csv"));
             while ((line = br.readLine()) != null) {
 
                 // store the line as an array
@@ -77,7 +79,7 @@ public class graphGenerator extends javax.swing.JPanel {
 
         try {
 
-            br = new BufferedReader(new FileReader("spending.csv")); //open csv
+            br = new BufferedReader(new FileReader(main.userName + "spending.csv")); //open csv
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
@@ -135,7 +137,9 @@ public class graphGenerator extends javax.swing.JPanel {
      * Creates new form graphGenerator
      * calls the relevant chart generator
      */
-    public graphGenerator(int type, int grouping) {
+    public graphGenerator(int type, int grouping, MainMenu main) {
+        
+        this.main = main;
         
         if(type == 0){
             ChartPanel chartPanel = new ChartPanel(getLineChart(grouping));
