@@ -3,26 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spendingtracker;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author adam-
+ * @author Vanaja
  */
-public class SpendingTracker {
-    
+public class security {
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        // load up main menu
-        MainMenu menu = new MainMenu();
-        menu.setVisible(true);
-        
-        menu.updateBalance();
+        // TODO code application logic here
     }
-
 }

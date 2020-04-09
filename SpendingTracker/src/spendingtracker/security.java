@@ -5,16 +5,7 @@
  */
 package spendingtracker;
 
-import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,18 +13,15 @@ import java.util.logging.Logger;
  */
 public class security extends javax.swing.JFrame {
     static char[] pin = null;
-    BufferedReader br;
-    File f;
+    
     /**
      * Creates new form security
-     * @throws java.io.FileNotFoundException
      */
-    public security() throws IOException {
-        f = new File("pin.csv");
-        this.br = new BufferedReader(new FileReader("pin.csv"));
+    public security() {
         initComponents();
         
-        if (br.readLine().length() != 4) {
+        System.out.println("Check");
+        if (pin == null) {
             jLayeredPane1.setVisible(true);
             jLayeredPane2.setVisible(false);
         }
@@ -64,7 +52,7 @@ public class security extends javax.swing.JFrame {
         jPasswordField3 = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +61,7 @@ public class security extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Create a security pin");
+        jLabel1.setText("Enter a security pin");
 
         jLabel2.setText("Confirm security pin");
 
@@ -228,22 +216,13 @@ public class security extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (Arrays.equals(jPasswordField1.getPassword(), jPasswordField2.getPassword())) {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter("pin.csv", false);
-                writer.write(jPasswordField1.getPassword());
-                jPasswordField1.setText("");
-                jPasswordField2.setText("");
-                setVisible(false);
-                
-                MainMenu menu = new MainMenu();
-                menu.setVisible(true);
-                writer.close();
-                br.close();
-                dispose();
-            } catch (IOException ex) {
-                Logger.getLogger(security.class.getName()).log(Level.SEVERE, null, ex);
-            }             
+            pin = jPasswordField1.getPassword();
+            jPasswordField1.setText("");
+            jPasswordField2.setText("");
+            setVisible(false);
+            
+            Data data = new Data();
+            data.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -256,21 +235,13 @@ public class security extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("pin.csv"));
-            char[] ch = reader.readLine().toCharArray();
-            if (Arrays.equals(jPasswordField3.getPassword(), ch)) {
-                setVisible(false);
-                
-                MainMenu menu = new MainMenu();
-                menu.setVisible(true);
-                reader.close();
-                br.close();
-                dispose();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(security.class.getName()).log(Level.SEVERE, null, ex);
+        if (Arrays.equals(jPasswordField3.getPassword(), pin)) {
+            jPasswordField1.setText("");
+            jPasswordField2.setText("");
+            setVisible(false);
+            
+            Data data = new Data();
+            data.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -303,15 +274,8 @@ public class security extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                try {
-                    new security().setVisible(true);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(security.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(security.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new security().setVisible(true);
                 
             }
         });
