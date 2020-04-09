@@ -13,7 +13,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -30,18 +28,16 @@ import java.util.regex.Pattern;
  */
 public class Spending extends javax.swing.JFrame {
     
-    private MainMenu main;
-    
+    Format currency = NumberFormat.getCurrencyInstance(Locale.UK);
     DateFormat df = new SimpleDateFormat("dd/MM/yy");
     /**
      * Creates new form Spending
      */
-    public Spending(MainMenu main) {
+    public Spending() {
         initComponents();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();   
-        tf1.setValue(date); //fill box with current date
-        this.main = main;
+        tf1.setValue(date);
     }
 
     /**
@@ -63,15 +59,10 @@ public class Spending extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tf1 = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
-        CategoryBox = new javax.swing.JComboBox<>();
-        MoneyIn = new javax.swing.JCheckBox();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
 
         tf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         tf.setText("£");
@@ -147,17 +138,12 @@ public class Spending extends javax.swing.JFrame {
         jLabel5.setText("Date");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category 1", "Category 2" }));
-        CategoryBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CategoryBoxActionPerformed(evt);
-            }
-        });
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category 1", "Category 2" }));
 
-        MoneyIn.setText("Money going into account");
-        MoneyIn.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBox1.setText("Money going into account");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MoneyInActionPerformed(evt);
+                jCheckBox1ActionPerformed(evt);
             }
         });
 
@@ -180,9 +166,9 @@ public class Spending extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MoneyIn)
+                    .addComponent(jCheckBox1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(CategoryBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tf1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -196,14 +182,14 @@ public class Spending extends javax.swing.JFrame {
                     .addComponent(tf, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MoneyIn)
+                .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CategoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -218,81 +204,18 @@ public class Spending extends javax.swing.JFrame {
     private void tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfActionPerformed
         
     }//GEN-LAST:event_tfActionPerformed
-        
-    private String modifyBalance(String value){
-        try{
-            // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
-            String balance = reader.readLine();
 
-            double balancePoundsPence = Double.parseDouble(balance);
-            double newPoundsPence = Double.parseDouble(value);
-            
-            DecimalFormat FORMAT = new DecimalFormat("0.00");
-
-            String total = FORMAT.format(balancePoundsPence + newPoundsPence);
-            
-            FileWriter writer = new FileWriter("balance.csv", false);
-            
-            // use file writer to write string to file
-            writer.write(total);
-            writer.close();
-            
-            return total;
-            
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e){
-            System.out.println(e);
-        }
-        
-        return "0.00";
-    }
-    
-    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 				
         try {
-            // create file writer to write to, and a string builder to build string to write to file
             FileWriter writer = new FileWriter("spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
             StringBuilder sb = new StringBuilder();
-            
-            // get amount spent in £ text
-            var spent = tf.getText();
-            if(spent.length() == 0){ //prevents empty amounts being added
-                return;
-            } else if(spent.charAt(0) == '£'){
-                spent = spent.substring(1);
-            }
-            spent = spent.replace(",", "");
-            
-            if (!MoneyIn.isSelected()){
-                // if money is coming out make it negative
-                spent = "-" + spent;
-            }
-            
-            String newBalance = this.modifyBalance(spent);
-            main.updateBalance();
-            
-            System.out.println(spent);
-            sb.append(spent);
+            sb.append(tf.getText());
             sb.append(',');
-            
-            // get the date and format it,
             sb.append(df.format(tf1.getValue()));
-            sb.append(',');
-            
-            // get the category that was entered
-            sb.append(CategoryBox.getItemAt(CategoryBox.getSelectedIndex()));
-            sb.append(',');
-            
-            // add in current balance
-            sb.append(newBalance);
-            
-            // create new line for next entry
             sb.append('\n');
             
-            // use file writer to write string to file
+
             writer.write(sb.toString());
             writer.close();
           } catch (FileNotFoundException e) {
@@ -311,46 +234,44 @@ public class Spending extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf1ActionPerformed
 
-    private void MoneyInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoneyInActionPerformed
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MoneyInActionPerformed
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CategoryBoxActionPerformed
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // When shown, we want to add all categories to selection
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
-            // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("categories.csv"));
-            
-            // while there is still data...
-            String lineRead; 
-             
-            // clear the category box
-            CategoryBox.removeAllItems();
-             
-            // while there is data to be read from file..
-            while ((lineRead = reader.readLine()) != null){
-                // add each new category
-                CategoryBox.addItem(lineRead);
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
-            // close buffered reader
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e){
-              System.out.println(e);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Spending.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_formComponentShown
+        //</editor-fold>
+        
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new Spending().setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CategoryBox;
-    private javax.swing.JCheckBox MoneyIn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

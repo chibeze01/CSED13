@@ -5,12 +5,6 @@
  */
 package spendingtracker;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  *
  * @author adam-
@@ -36,8 +30,7 @@ public class MainMenu extends javax.swing.JFrame {
         Background = new javax.swing.JPanel();
         HeaderPanel = new javax.swing.JPanel();
         InnerHeaderPanel = new javax.swing.JPanel();
-        InnerHeaderPanel1 = new javax.swing.JPanel();
-        Title1 = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
         BottomPanel = new javax.swing.JPanel();
         BottomInnerPanel = new javax.swing.JPanel();
         Configure = new javax.swing.JButton();
@@ -48,8 +41,6 @@ public class MainMenu extends javax.swing.JFrame {
         Spending = new javax.swing.JButton();
         Goals = new javax.swing.JButton();
         Data = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        BalanceDisplay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,40 +49,24 @@ public class MainMenu extends javax.swing.JFrame {
 
         HeaderPanel.setBackground(new java.awt.Color(218, 218, 218));
 
-        Title1.setBackground(new java.awt.Color(204, 204, 204));
-        Title1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        Title1.setForeground(new java.awt.Color(24, 51, 51));
-        Title1.setText("Spending Tracker");
-        Title1.setToolTipText("");
-
-        javax.swing.GroupLayout InnerHeaderPanel1Layout = new javax.swing.GroupLayout(InnerHeaderPanel1);
-        InnerHeaderPanel1.setLayout(InnerHeaderPanel1Layout);
-        InnerHeaderPanel1Layout.setHorizontalGroup(
-            InnerHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(InnerHeaderPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Title1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        InnerHeaderPanel1Layout.setVerticalGroup(
-            InnerHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Title1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-        );
+        Title.setBackground(new java.awt.Color(204, 204, 204));
+        Title.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        Title.setForeground(new java.awt.Color(24, 51, 51));
+        Title.setText("Spending Tracker");
+        Title.setToolTipText("");
 
         javax.swing.GroupLayout InnerHeaderPanelLayout = new javax.swing.GroupLayout(InnerHeaderPanel);
         InnerHeaderPanel.setLayout(InnerHeaderPanelLayout);
         InnerHeaderPanelLayout.setHorizontalGroup(
             InnerHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InnerHeaderPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(InnerHeaderPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         InnerHeaderPanelLayout.setVerticalGroup(
             InnerHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(InnerHeaderPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(InnerHeaderPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(Title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout HeaderPanelLayout = new javax.swing.GroupLayout(HeaderPanel);
@@ -233,26 +208,6 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        BalanceDisplay.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        BalanceDisplay.setText("Your balance: £0.00");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BalanceDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BalanceDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout BackgroundLayout = new javax.swing.GroupLayout(Background);
         Background.setLayout(BackgroundLayout);
         BackgroundLayout.setHorizontalGroup(
@@ -260,19 +215,15 @@ public class MainMenu extends javax.swing.JFrame {
             .addComponent(HeaderPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BottomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         BackgroundLayout.setVerticalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BackgroundLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -288,16 +239,16 @@ public class MainMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void SpendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpendingActionPerformed
-        Spending spending = new Spending(this);
+        Spending spending = new Spending();
         spending.setVisible(true);
         
     }//GEN-LAST:event_SpendingActionPerformed
@@ -307,7 +258,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitActionPerformed
 
     private void DataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataActionPerformed
-        Data data = new Data(this);
+        Data data = new Data();
         data.setVisible(true);
     }//GEN-LAST:event_DataActionPerformed
     
@@ -317,47 +268,13 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_HelpActionPerformed
 
     private void ConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfigureActionPerformed
-        Configure configure = new Configure(this);
+        Configure configure = new Configure();
         configure.setVisible(true);
     }//GEN-LAST:event_ConfigureActionPerformed
 
-    public void updateBalance() {
-        // TODO: update balance using csv file when called
-        try{
-            // create file reader to read bytes, and buffered reader to read lines
-            BufferedReader reader = new BufferedReader(new FileReader("balance.csv"));
-            
-            String line = reader.readLine();
-            
-            if (line == null){
-                // if null set to £0.00
-                FileWriter writer = new FileWriter("balance.csv", false);
-            
-                // use file writer to write string to file
-                writer.write("0.00");
-                
-                writer.close();
-                
-                BalanceDisplay.setText("Your current balance is £0.00");
-            }else{
-                BalanceDisplay.setText("Your current balance is £" + line);
-            }
-            
-            
-            
-            // close buffered reader
-            reader.close();            
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
-    private javax.swing.JLabel BalanceDisplay;
     private javax.swing.JPanel BottomInnerPanel;
     private javax.swing.JPanel BottomPanel;
     private javax.swing.JButton Configure;
@@ -367,11 +284,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel HeaderPanel;
     private javax.swing.JButton Help;
     private javax.swing.JPanel InnerHeaderPanel;
-    private javax.swing.JPanel InnerHeaderPanel1;
     private javax.swing.JButton Spending;
-    private javax.swing.JLabel Title1;
+    private javax.swing.JLabel Title;
     private javax.swing.JPanel TopInnerPanel;
     private javax.swing.JPanel TopPanel;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
