@@ -145,6 +145,11 @@ public class MainMenu extends javax.swing.JFrame {
         Help.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Help.setIconTextGap(0);
         Help.setMinimumSize(new java.awt.Dimension(0, 0));
+        Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpActionPerformed(evt);
+            }
+        });
         BottomInnerPanel.add(Help);
 
         Exit.setBackground(new java.awt.Color(204, 204, 204));
