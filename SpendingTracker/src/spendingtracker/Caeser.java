@@ -1,0 +1,86 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package spendingtracker;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+/**
+ *
+ * @author willqueree
+ */
+public class Caeser {
+
+  private File file;
+
+  public Caeser(String path) {
+
+    this.file = new File(path);
+
+  }
+
+  public void encrypt(int shift, String tempType) {
+
+    File temp = new File("temp." + tempType);
+
+    try {
+
+      BufferedReader inFile = new BufferedReader(new FileReader(file));
+      FileWriter fileWriter = new FileWriter(temp);
+
+      int c;
+      while ((c = inFile.read()) != -1) {
+        fileWriter.write((char)(c + shift));
+      }
+
+      inFile.close();
+      fileWriter.close();
+
+      file.delete();
+      temp.renameTo(file);
+
+    } 
+    
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  public void decrypt(int shift, String tempType) {
+
+    File temp = new File("temp." + tempType);
+
+    try {
+
+      BufferedReader inFile = new BufferedReader(new FileReader(file));
+      FileWriter fileWriter = new FileWriter(temp);
+
+      int c;
+      while ((c = inFile.read()) != -1) {
+        fileWriter.write((char)(c - shift));
+      }
+
+      inFile.close();
+      fileWriter.close();
+
+      file.delete();
+      temp.renameTo(file);
+
+    } 
+    
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+
+}
