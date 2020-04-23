@@ -344,6 +344,14 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_GoalsActionPerformed
 
     public void updateBalance() {
+        
+        Caeser balanceCaeser = new Caeser(this.userName + "balance.csv");
+        
+        try {
+            balanceCaeser.decrypt(12, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+        
         // TODO: update balance using csv file when called
         try{
             // create file reader to read bytes, and buffered reader to read lines
@@ -368,7 +376,10 @@ public class MainMenu extends javax.swing.JFrame {
             
             
             // close buffered reader
-            reader.close();            
+            reader.close();
+            
+            balanceCaeser.encrypt(12, "csv");
+            
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }catch (IOException e) {

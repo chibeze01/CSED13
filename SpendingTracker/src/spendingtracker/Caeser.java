@@ -7,6 +7,7 @@ package spendingtracker;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class Caeser {
 
   }
 
-  public void encrypt(int shift, String tempType) {
+  public void encrypt(int shift, String tempType) throws FileNotFoundException {
 
     File temp = new File("temp." + tempType);
 
@@ -54,7 +55,7 @@ public class Caeser {
 
   }
 
-  public void decrypt(int shift, String tempType) {
+  public void decrypt(int shift, String tempType) throws FileNotFoundException {
 
     File temp = new File("temp." + tempType);
 

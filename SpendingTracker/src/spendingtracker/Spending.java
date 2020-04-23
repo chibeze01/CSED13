@@ -229,6 +229,14 @@ public class Spending extends javax.swing.JFrame {
     private String modifyBalance(String value){
         String balance = "0.00";
         
+        Caeser balanceCaeser = new Caeser(main.userName + "balance.csv");
+        
+        try {
+            balanceCaeser.decrypt(12, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
+        
         // try and get balance if it exists
         try {
             // create file reader to read bytes, and buffered reader to read lines
@@ -259,6 +267,8 @@ public class Spending extends javax.swing.JFrame {
             writer.write(total);
             writer.close();
             
+            balanceCaeser.encrypt(12, "csv");
+            
             return total;
             
         } catch (FileNotFoundException e) {            
@@ -272,7 +282,17 @@ public class Spending extends javax.swing.JFrame {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-				
+		
+        
+        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
+        
+        try {
+            spendingCaeser.decrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {
+            ignore.getMessage();
+        }
+
         try {
             // create file writer to write to, and a string builder to build string to write to file
             FileWriter writer = new FileWriter(main.userName + "spending.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
@@ -316,6 +336,9 @@ public class Spending extends javax.swing.JFrame {
             // use file writer to write string to file
             writer.write(sb.toString());
             writer.close();
+            
+            spendingCaeser.encrypt(10, "csv");
+            
           } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
           } catch (IOException e){
@@ -341,7 +364,16 @@ public class Spending extends javax.swing.JFrame {
     }//GEN-LAST:event_CategoryBoxActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // When shown, we want to add all categories to selection
+        
+        Caeser categoriesCaeser = new Caeser(main.userName + "categories.csv");
+        
+        try {
+            categoriesCaeser.decrypt(8, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
+        
+// When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
             BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
@@ -364,12 +396,26 @@ public class Spending extends javax.swing.JFrame {
             if (i == 0){
                 // no categories found, can't enter a spending
                 JOptionPane.showMessageDialog(null, "You must create categories before entering spending!");
+                
+                try {
+                    categoriesCaeser.encrypt(8, "csv");
+                }
+                catch (FileNotFoundException ignore) {}
+
                 this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }
             // close buffered reader
             reader.close();
+            
+            categoriesCaeser.encrypt(8, "csv");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "You must create categories before entering spending!");
+            
+            try {
+                categoriesCaeser.encrypt(8, "csv");
+            }
+            catch (FileNotFoundException ignore) {}
+
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             System.out.println(e.getMessage());
         } catch (IOException e){
