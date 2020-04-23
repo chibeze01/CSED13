@@ -38,6 +38,14 @@ public class graphGenerator extends javax.swing.JPanel {
       
       BufferedReader br = null;
         String line = "";
+        
+        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
+        
+        try {
+            spendingCaeser.decrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+        
 
         try {
             //open csv file
@@ -70,13 +78,25 @@ public class graphGenerator extends javax.swing.JPanel {
                 }
             }
         }
+        
+        try {
+            spendingCaeser.encrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
       return dataset;
    }
     //returns dataset for pie charts
     private PieDataset getPieData(int key){
       DefaultPieDataset dataset=new DefaultPieDataset();
       
-      BufferedReader br = null;
+        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
+        
+        try {
+            spendingCaeser.decrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+      
+        BufferedReader br = null;
         String line = "";
 
         try {
@@ -110,6 +130,12 @@ public class graphGenerator extends javax.swing.JPanel {
                 }
             }
         }
+        
+        try {
+            spendingCaeser.encrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
       return dataset;
    }
     
