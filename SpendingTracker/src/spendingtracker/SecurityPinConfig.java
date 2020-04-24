@@ -144,7 +144,15 @@ public class SecurityPinConfig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here
+        
+        Caeser pinCaeser = new Caeser(userName + "pin.csv");
+        try {
+            pinCaeser.decrypt(24, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+        
+
+// TODO add your handling code here
         String pinCon = Arrays.toString(PinConfirm.getPassword());
         String pinEnt = Arrays.toString(NewPin.getPassword());
         
@@ -155,7 +163,7 @@ public class SecurityPinConfig extends javax.swing.JFrame {
             PinFailed.setText("Pin must be of length 4!");
             PinFailed.setVisible(true);
             
-        }else if (pinCon.equals(pinEnt)){
+        } else if (pinCon.equals(pinEnt)){
             // if the pins are equal
             try{
                 // if new pins are equal then allow pin change, set append to false
@@ -165,6 +173,9 @@ public class SecurityPinConfig extends javax.swing.JFrame {
                 writer.write(Arrays.toString(PinConfirm.getPassword()));
                 
                 writer.close();
+                
+                pinCaeser.encrypt(24, "csv");
+                
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
             } catch (IOException e){

@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -150,7 +151,17 @@ public class Data extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void loadTable(){
+    private void loadTable() {
+        
+        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
+        
+        try {
+            spendingCaeser.decrypt(10, "csv");
+        }
+        catch (FileNotFoundException ignore) {
+            JOptionPane.showMessageDialog(null, "No Data to show.");
+            setVisible(false);
+        }
         
         String line = "";
         BufferedReader br = null;
@@ -171,17 +182,31 @@ public class Data extends javax.swing.JFrame {
             }
             
             br.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.print("not found");
+            spendingCaeser.encrypt(10, "csv");
+        } 
+        
+        
+        
+        catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } 
+        
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
     
     private void removeSpendingEntry(int index){
         DecimalFormat FORMAT = new DecimalFormat("0.00");
+        
+        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
+        Caeser balanceCaeser = new Caeser(main.userName + "balance.csv");
+        try {
+            spendingCaeser.decrypt(10, "csv");
+            balanceCaeser.decrypt(12, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
         
         try {
             BufferedReader br = new BufferedReader(new FileReader(main.userName + "spending.csv"));
@@ -227,6 +252,8 @@ public class Data extends javax.swing.JFrame {
             // close writer
             writer.close();
             
+            spendingCaeser.encrypt(10, "csv");
+            
             
             
             br = new BufferedReader(new FileReader(main.userName + "balance.csv"));
@@ -243,6 +270,8 @@ public class Data extends javax.swing.JFrame {
             
             // close writer
             writer.close();
+            
+            balanceCaeser.encrypt(12, "csv");
             
             // update main menu
             main.updateBalance();

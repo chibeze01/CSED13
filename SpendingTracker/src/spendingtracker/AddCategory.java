@@ -112,8 +112,18 @@ public class AddCategory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
+        
+        Caeser categoriesCaeser = new Caeser(main.userName + "categories.csv");
+        
+        try {
+            categoriesCaeser.decrypt(8, "csv");
+        }
+        catch (FileNotFoundException ignore) {
+        }
+        
         // TODO Add category then close the jframe
-        try{
+        try {
+            
             FileWriter writer = new FileWriter(main.userName + "categories.csv", true); //creates file in project folder (...CSED13/SpendingTracker)
             StringBuilder sb = new StringBuilder();
             
@@ -126,6 +136,9 @@ public class AddCategory extends javax.swing.JFrame {
             // use file writer to write string to file
             writer.write(sb.toString());
             writer.close();
+            
+            categoriesCaeser.encrypt(8, "csv");
+            
           } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
           } catch (IOException e){

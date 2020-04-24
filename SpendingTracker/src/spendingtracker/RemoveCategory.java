@@ -114,7 +114,15 @@ public class RemoveCategory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
-         // When shown, we want to add all categories to selection
+        
+        Caeser categoriesCaeser = new Caeser(main.userName + "categories.csv");
+        
+        try {
+            categoriesCaeser.decrypt(8, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
+// When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
             BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
@@ -149,7 +157,7 @@ public class RemoveCategory extends javax.swing.JFrame {
             
             // close buffered reader
             reader.close();
-            
+                
             
             // update the combo box with the new categories
             // reset bufferedreader to read from start
@@ -167,6 +175,8 @@ public class RemoveCategory extends javax.swing.JFrame {
             // close buffered reader
             reader.close();
             
+            categoriesCaeser.encrypt(8, "csv");
+            
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e){
@@ -175,7 +185,16 @@ public class RemoveCategory extends javax.swing.JFrame {
     }//GEN-LAST:event_RemoveActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // When shown, we want to add all categories to selection
+        
+        Caeser categoriesCaeser = new Caeser(main.userName + "categories.csv");
+        
+        try {
+            categoriesCaeser.decrypt(8, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
+        
+// When shown, we want to add all categories to selection
         try {
             // create file reader to read bytes, and buffered reader to read lines
             BufferedReader reader = new BufferedReader(new FileReader(main.userName + "categories.csv"));
@@ -193,6 +212,8 @@ public class RemoveCategory extends javax.swing.JFrame {
             }
             // close buffered reader
             reader.close();
+            
+            categoriesCaeser.encrypt(8, "csv");
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e){

@@ -116,8 +116,15 @@ public class SetBalance extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        // TODO overwrite balance in csv file
-        try{
+        
+        Caeser balanceCaeser = new Caeser(main.userName + "balance.csv");
+        try {
+            balanceCaeser.decrypt(12, "csv");
+        }
+        catch (FileNotFoundException ignore) {}
+
+// TODO overwrite balance in csv file
+        try {
             FileWriter writer = new FileWriter(main.userName + "balance.csv", false);
             
             // get new balance
@@ -134,6 +141,7 @@ public class SetBalance extends javax.swing.JFrame {
             // use file writer to write string to file
             writer.write(spent);
             writer.close();
+            balanceCaeser.encrypt(12, "csv");
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e){
