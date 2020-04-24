@@ -131,6 +131,18 @@ public class SelectUser extends javax.swing.JFrame {
         String userName = (String)UserNames.getSelectedItem();
         
         if (!userName.equals("")){
+            
+            Caeser pinCaeser = new Caeser(userName + "pin.csv");
+            
+            try {
+                pinCaeser.decrypt(24, "csv");
+            }
+            catch (FileNotFoundException e) {
+                // open security pin configure, as user has no pin file
+                SecurityPinConfig pinConfig = new SecurityPinConfig(userName, true);
+                pinConfig.setVisible(true);
+            }
+            
             try {
                 // create file reader to read bytes, and buffered reader to read lines
                 BufferedReader reader = new BufferedReader(new FileReader(userName + "pin.csv"));
@@ -143,13 +155,12 @@ public class SelectUser extends javax.swing.JFrame {
                 pinEnter.setVisible(true);
 
                 reader.close();
-            } catch (FileNotFoundException e) {
-                // open security pin configure, as user has no pin file
-                SecurityPinConfig pinConfig = new SecurityPinConfig(userName, true);
-                pinConfig.setVisible(true);
-
-                System.out.println(e.getMessage());
-            } catch (IOException e){
+                
+                pinCaeser.encrypt(24, "csv");
+                
+            } catch (FileNotFoundException ignore) {} 
+            
+            catch (IOException e){
                   System.out.println(e);
             }
             // close user selection window

@@ -78,7 +78,7 @@ public class Caeser {
     } 
     
     catch (IOException e) {
-      e.printStackTrace();
+      throw new FileNotFoundException();
     }
 
   }
