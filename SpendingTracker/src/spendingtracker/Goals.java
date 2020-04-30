@@ -33,7 +33,7 @@ public class Goals extends javax.swing.JFrame {
     public Goals(MainMenu main) {
         initComponents();
         this.main = main;
-        //loadTable();
+        loadTable();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
@@ -52,8 +52,8 @@ public class Goals extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         goalsTable = new javax.swing.JTable();
-        removeGoal = new javax.swing.JButton();
         addGoal = new javax.swing.JButton();
+        addGoal1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,17 +80,17 @@ public class Goals extends javax.swing.JFrame {
         goalsTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         goalsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+                {null, null, null}
             },
             new String [] {
-                "Date Set", "Goal Title", "Amount Required", "Amount Saved", "Weekly Saving Needed", "Date End", "On Target"
+                "Goal Description", "Goal End Date", "Goal Met"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -103,19 +103,26 @@ public class Goals extends javax.swing.JFrame {
         });
         goalsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(goalsTable);
-
-        removeGoal.setText("Remove Selected Goal");
-        removeGoal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeGoalActionPerformed(evt);
-            }
-        });
+        if (goalsTable.getColumnModel().getColumnCount() > 0) {
+            goalsTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            goalsTable.getColumnModel().getColumn(1).setMaxWidth(750);
+            goalsTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+            goalsTable.getColumnModel().getColumn(2).setMaxWidth(500);
+        }
 
         addGoal.setText("Add Goal");
         addGoal.setToolTipText("");
         addGoal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addGoalActionPerformed(evt);
+            }
+        });
+
+        addGoal1.setText("Set Selected Goal Met");
+        addGoal1.setToolTipText("");
+        addGoal1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGoal1ActionPerformed(evt);
             }
         });
 
@@ -128,9 +135,9 @@ public class Goals extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addGoal)
+                        .addComponent(addGoal1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(removeGoal)
+                        .addComponent(addGoal)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
@@ -144,8 +151,8 @@ public class Goals extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(removeGoal)
-                    .addComponent(addGoal))
+                    .addComponent(addGoal)
+                    .addComponent(addGoal1))
                 .addContainerGap())
         );
 
@@ -166,9 +173,9 @@ public class Goals extends javax.swing.JFrame {
         return weeksBetween;
     }
     
-    private void loadTable(){
+    protected void loadTable(){
         
-        String line = "";
+        String line;
         BufferedReader br = null;
          
         try {
@@ -176,61 +183,120 @@ public class Goals extends javax.swing.JFrame {
             DefaultTableModel tableModel = (DefaultTableModel) goalsTable.getModel();
             
             // clear rows
-            tableModel.setRowCount(0);
+            tableModel.setRowCount(0);            
             
-            while ((line = br.readLine()) != null) {
+            
+            while ((line = br.readLine()) != null && line.split(",").length > 1) {
 
+                System.out.println(line);
+                
                 // use comma as separator
                 String[] item = line.split(",");
                 
-                String dateSet = item[0];
-                String title = item[1];
-                String amountTotal = item[2];
-                String amountSaved = item[3];
-                String weeklySaving = item[4];
-                String dateEnd = item[5];
-                
-                LocalDate parsedStartDate = LocalDate.parse(dateSet);
-                LocalDate todayDate = LocalDate.now();
+                String goalDesc = item[0];
+                String endDate = item[1];
+                boolean goalMet = Boolean.parseBoolean(item[2]);
                 
                 
                 
-                int weeksPassed = countWeeksBetween(parsedStartDate, todayDate);
                 
-                
-                
-                tableModel.addRow(new Object[]{item[1], item[0], item[2], item[3]});
+                tableModel.addRow(new Object[]{goalDesc, endDate, goalMet});
             }
             
             br.close();
 
         } catch (FileNotFoundException e) {
             System.out.print("not found");
-            e.printStackTrace();
+            // create file and re-load table
+            try{
+                FileWriter writer = new FileWriter(main.userName + "goals.csv", false);
+                writer.close();
+                loadTable();
+            } catch(IOException ignore){}
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+    private void setGoalMet(int index){
+        
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(main.userName + "goals.csv"));
+            String stringToWrite = "";
+            
+            String line;
+            
+            int i = 0;
+            
+            while ((line = br.readLine()) != null){
+                
+                // if not the entry we want to remove, then add to string
+                if (i == index){
+                    // if i greater than index, modify balance
+                    String[] parts = line.split(",");
+                    
+                    // set end value as true if index
+                    stringToWrite = stringToWrite + parts[0] + "," + parts[1] + ",true\n";
+                    
+                } else{
+                    stringToWrite = stringToWrite + line + "\n";
+                }
+                
+                i++;
+            }
+            
+            
+            // create file writer, set append to FALSE, as we want to overwrite
+            FileWriter writer = new FileWriter(main.userName + "goals.csv", false);
+            
+            // write string to file
+            writer.write(stringToWrite);
+            
+            // close writer
+            writer.close();
+            br.close();
+            
+            loadTable();
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void removeGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGoalActionPerformed
-        
-    }//GEN-LAST:event_removeGoalActionPerformed
-
     private void addGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGoalActionPerformed
-        // TODO add your handling code here:
+        // TODO create add goal frame, set visible
+        AddGoal newGoal = new AddGoal(main, this);
+        newGoal.setVisible(true);
+        
     }//GEN-LAST:event_addGoalActionPerformed
+
+    private void addGoal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGoal1ActionPerformed
+        // TODO add your handling code here: 
+        int rowSelected = goalsTable.getSelectedRow();
+        
+        // if a row is selected then remove
+        if (rowSelected != -1){
+            this.setGoalMet(rowSelected);
+            this.loadTable();
+        }
+    }//GEN-LAST:event_addGoal1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addGoal;
+    private javax.swing.JButton addGoal1;
     private javax.swing.JTable goalsTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton removeGoal;
     // End of variables declaration//GEN-END:variables
 }

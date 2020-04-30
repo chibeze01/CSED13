@@ -121,7 +121,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Configure.setBackground(new java.awt.Color(204, 204, 204));
         Configure.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        Configure.setForeground(new java.awt.Color(51, 51, 51));
         Configure.setText("  Configure");
         Configure.setToolTipText("");
         Configure.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -138,7 +137,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Help.setBackground(new java.awt.Color(204, 204, 204));
         Help.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        Help.setForeground(new java.awt.Color(51, 51, 51));
         Help.setText("  Help");
         Help.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Help.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -154,7 +152,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Exit.setBackground(new java.awt.Color(204, 204, 204));
         Exit.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        Exit.setForeground(new java.awt.Color(51, 51, 51));
         Exit.setText("  Exit");
         Exit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Exit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -189,7 +186,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Spending.setBackground(new java.awt.Color(204, 204, 204));
         Spending.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        Spending.setForeground(new java.awt.Color(51, 51, 51));
         Spending.setText("Spending");
         Spending.setToolTipText("");
         Spending.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -205,7 +201,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Goals.setBackground(new java.awt.Color(204, 204, 204));
         Goals.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        Goals.setForeground(new java.awt.Color(51, 51, 51));
         Goals.setText("Goals");
         Goals.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Goals.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -220,7 +215,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         Data.setBackground(new java.awt.Color(204, 204, 204));
         Data.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        Data.setForeground(new java.awt.Color(51, 51, 51));
         Data.setText("Data");
         Data.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Data.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
