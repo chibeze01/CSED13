@@ -12,6 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -32,6 +35,8 @@ public class MainMenu extends javax.swing.JFrame {
         this.userName = userName;
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        this.generateMemo();
     }
 
     /**
@@ -60,6 +65,8 @@ public class MainMenu extends javax.swing.JFrame {
         Data = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         BalanceDisplay = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        memo = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,7 +117,7 @@ public class MainMenu extends javax.swing.JFrame {
             HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HeaderPanelLayout.createSequentialGroup()
                 .addComponent(InnerHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         HeaderPanelLayout.setVerticalGroup(
             HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,11 +274,23 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        memo.setEditable(false);
+        memo.setColumns(20);
+        memo.setLineWrap(true);
+        memo.setRows(4);
+        memo.setText("You have 12 days left on your first goal.");
+        memo.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(memo);
+
         javax.swing.GroupLayout BackgroundLayout = new javax.swing.GroupLayout(Background);
         Background.setLayout(BackgroundLayout);
         BackgroundLayout.setHorizontalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(HeaderPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BackgroundLayout.createSequentialGroup()
+                .addComponent(HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -284,8 +303,10 @@ public class MainMenu extends javax.swing.JFrame {
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(9, 9, 9)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,6 +405,49 @@ public class MainMenu extends javax.swing.JFrame {
         }
         
     }
+    
+    public void generateMemo(){
+        String memoTxt = "ERROR";
+        String line;
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(new FileReader(this.userName + "goals.csv"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            while ((line = br.readLine()) != null && line.split(",").length > 1) {
+
+                    line = line;
+
+                    System.out.println(line);
+
+                    // use comma as separator
+                    String[] item = line.split(",");
+
+                    String goalDesc = item[0];
+                    String endDate = item[1];
+                    boolean goalMet = Boolean.parseBoolean(item[2]);
+                    
+                    if(goalMet){
+                        memoTxt = "Tip: Create a new goal under 'Goals' -> 'add goal'";
+                    }else{
+                        long days = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(endDate, formatter));
+                        memoTxt = "You have " + Long.toString(days) + " days until the end of your '" + goalDesc + "' goal.";
+                        break;
+                    }
+                }
+
+                br.close();
+        }catch (FileNotFoundException e) {
+            System.out.print("not found");
+            // create file and re-load table
+            try{
+                FileWriter writer = new FileWriter(this.userName + "goals.csv", false);
+                writer.close();
+            } catch(IOException ignore){}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        memo.setText(memoTxt);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -403,5 +467,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel TopInnerPanel;
     private javax.swing.JPanel TopPanel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea memo;
     // End of variables declaration//GEN-END:variables
 }
