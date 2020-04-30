@@ -26,6 +26,8 @@ public class Caeser {
     this.file = new File(path);
 
   }
+    
+    public Caeser(){}
 
   public void encrypt(int shift, String tempType) throws FileNotFoundException {
 
@@ -82,6 +84,36 @@ public class Caeser {
     }
 
   }
+  
+    public boolean isValid(char letter){
+        return ((letter >= 47 && letter <= 122));
+    }
+  
+    public String encryptString(int shift, String text) {
+
+        String newString = "";
+
+        for (int i = 0; i < text.length(); i++){
+            if (isValid(text.charAt(i))){
+                newString += (char)((int)text.charAt(i) - shift);
+            }
+        }
+
+        return newString;
+    }
+    
+    public String decryptString(int shift, String text) {
+
+        String newString = "";
+
+        for (int i = 0; i < text.length(); i++){
+            if (isValid(text.charAt(i))){
+                newString += (char)((int)text.charAt(i) + shift);
+            }
+        }
+
+        return newString;
+    }
 
 
 }

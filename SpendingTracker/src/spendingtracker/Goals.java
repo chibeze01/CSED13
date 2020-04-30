@@ -158,20 +158,6 @@ public class Goals extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private int countWeeksBetween(LocalDate startDate, LocalDate endDate){
-        int weeksBetween = 1;
-        
-        
-        // while start date is before the end date...
-        while (startDate.isBefore(endDate)){
-            // add a week then check if start date passes end date
-            startDate = startDate.plusWeeks(1);
-            weeksBetween++;
-        }
-        
-        return weeksBetween;
-    }
     
     protected void loadTable(){
         
@@ -187,6 +173,8 @@ public class Goals extends javax.swing.JFrame {
             
             
             while ((line = br.readLine()) != null && line.split(",").length > 1) {
+                
+                line = main.caeser.decryptString(8, line);
 
                 System.out.println(line);
                 
@@ -230,6 +218,8 @@ public class Goals extends javax.swing.JFrame {
             
             while ((line = br.readLine()) != null){
                 
+                line = main.caeser.decryptString(8, line);
+                
                 // if not the entry we want to remove, then add to string
                 if (i == index){
                     // if i greater than index, modify balance
@@ -250,7 +240,7 @@ public class Goals extends javax.swing.JFrame {
             FileWriter writer = new FileWriter(main.userName + "goals.csv", false);
             
             // write string to file
-            writer.write(stringToWrite);
+            writer.write(main.caeser.encryptString(8, stringToWrite));
             
             // close writer
             writer.close();

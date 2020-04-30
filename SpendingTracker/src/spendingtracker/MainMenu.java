@@ -21,10 +21,13 @@ public class MainMenu extends javax.swing.JFrame {
 
     public String userName;
     
+    public Caeser caeser;
+    
     /**
      * Creates new form MainMenu
      */
     public MainMenu(String userName) {
+        caeser = new Caeser();
         initComponents();
         this.userName = userName;
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
