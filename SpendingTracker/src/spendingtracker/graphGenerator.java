@@ -43,14 +43,6 @@ public class graphGenerator extends javax.swing.JPanel {
       
       BufferedReader br = null;
         String line = "";
-        
-        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
-        
-        try {
-            spendingCaeser.decrypt(10, "csv");
-        }
-        catch (FileNotFoundException ignore) {}
-        
 
         try {
             //open csv file
@@ -83,25 +75,13 @@ public class graphGenerator extends javax.swing.JPanel {
                 }
             }
         }
-        
-        try {
-            spendingCaeser.encrypt(10, "csv");
-        }
-        catch (FileNotFoundException ignore) {}
       return dataset;
    }
     //returns dataset for pie charts
     private PieDataset getPieData(int key){
       DefaultPieDataset dataset=new DefaultPieDataset();
       
-        Caeser spendingCaeser = new Caeser(main.userName + "spending.csv");
-        
-        try {
-            spendingCaeser.decrypt(10, "csv");
-        }
-        catch (FileNotFoundException ignore) {}
-      
-        BufferedReader br = null;
+      BufferedReader br = null;
         String line = "";
 
         try {
@@ -135,12 +115,6 @@ public class graphGenerator extends javax.swing.JPanel {
                 }
             }
         }
-        
-        try {
-            spendingCaeser.encrypt(10, "csv");
-        }
-        catch (FileNotFoundException ignore) {}
-
       return dataset;
    }
     
@@ -153,6 +127,8 @@ public class graphGenerator extends javax.swing.JPanel {
         PlotOrientation.VERTICAL,
         false,true,false);
         
+        this.chart = lineChart;
+        
         return lineChart;
     }
     
@@ -162,6 +138,8 @@ public class graphGenerator extends javax.swing.JPanel {
         "Spending",
         getPieData(grouping + 1),
         false,true,false);
+        
+        this.chart = pieChart;
         
         return pieChart;
     }
@@ -181,9 +159,6 @@ public class graphGenerator extends javax.swing.JPanel {
      */
     public graphGenerator(int type, int grouping, MainMenu main) {
         
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
         this.main = main;
         
         if(type == 0){
@@ -195,6 +170,7 @@ public class graphGenerator extends javax.swing.JPanel {
             chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 360 ) );
             this.add(chartPanel);
         }
+        
 
       initComponents();
     }
