@@ -204,6 +204,8 @@ public class Goals extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        this.main.generateMemo(); //refresh the memo on mainpage
     }
     
     private void setGoalMet(int index){

@@ -407,7 +407,7 @@ public class MainMenu extends javax.swing.JFrame {
     }
     
     public void generateMemo(){
-        String memoTxt = "ERROR";
+        String memoTxt = "Tip: Create a new goal under 'Goals' -> 'add goal'";
         String line;
         BufferedReader br = null;
         try{

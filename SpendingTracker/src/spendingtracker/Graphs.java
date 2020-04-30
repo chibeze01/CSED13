@@ -5,6 +5,12 @@
  */
 package spendingtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author User
@@ -12,6 +18,7 @@ package spendingtracker;
 public class Graphs extends javax.swing.JFrame {
     
     private MainMenu main;
+    private graphGenerator graphPnl;
 
     /**
      * Creates new form Graphs
@@ -19,9 +26,12 @@ public class Graphs extends javax.swing.JFrame {
     public Graphs(MainMenu main) {
         this.main = main;
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         //generate initial line graph
         graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex(), this.main);
         graphPanel.add(graphGen);
+        this.graphPnl = graphGen;
         this.pack();
     }
 
@@ -38,6 +48,7 @@ public class Graphs extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();
         graphPanel = new javax.swing.JPanel();
         graphType = new javax.swing.JComboBox<>();
         graphData = new javax.swing.JComboBox<>();
@@ -45,6 +56,9 @@ public class Graphs extends javax.swing.JFrame {
         sortByTxt = new javax.swing.JLabel();
         typetxt = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 6), new java.awt.Dimension(0, 6), new java.awt.Dimension(32767, 6));
+        save = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,18 +80,26 @@ public class Graphs extends javax.swing.JFrame {
 
         typetxt.setText("Type");
 
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(graphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(graphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(typetxt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(95, 95, 95)
-                .addComponent(sortByTxt))
+                .addComponent(sortByTxt)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(graphType, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,7 +111,10 @@ public class Graphs extends javax.swing.JFrame {
                         .addGap(97, 97, 97)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(69, 69, 69)
-                .addComponent(generateBtn))
+                .addComponent(generateBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(save)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +127,9 @@ public class Graphs extends javax.swing.JFrame {
                     .addComponent(sortByTxt))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(generateBtn)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(generateBtn)
+                        .addComponent(save))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,8 +148,24 @@ public class Graphs extends javax.swing.JFrame {
         graphPanel.removeAll();
         graphGenerator graphGen = new graphGenerator(graphType.getSelectedIndex(), graphData.getSelectedIndex(), this.main);
         graphPanel.add(graphGen);
+        this.graphPnl = graphGen;
         this.pack();
     }//GEN-LAST:event_generateBtnActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Graph");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("portable network graphics (*.png)", "png"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            graphPnl.exportPNG(fileToSave.getAbsolutePath());
+            System.out.println("Saved graph to: " + fileToSave.getAbsolutePath());
+        }
+    }//GEN-LAST:event_saveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -135,6 +178,8 @@ public class Graphs extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> graphData;
     private javax.swing.JPanel graphPanel;
     private javax.swing.JComboBox<String> graphType;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton save;
     private javax.swing.JLabel sortByTxt;
     private javax.swing.JLabel typetxt;
     // End of variables declaration//GEN-END:variables

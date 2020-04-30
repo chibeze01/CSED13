@@ -8,13 +8,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -31,6 +35,7 @@ import org.jfree.data.general.PieDataset;
 public class graphGenerator extends javax.swing.JPanel {
     
     private MainMenu main;
+    private JFreeChart chart;
     
     //makes dataset for line graphs
     private DefaultCategoryDataset getLineData(int colKey){
@@ -159,6 +164,15 @@ public class graphGenerator extends javax.swing.JPanel {
         false,true,false);
         
         return pieChart;
+    }
+    
+    public void exportPNG(String path){
+        try {
+            ChartUtilities.saveChartAsPNG(new File(path + ".png"), this.chart, 560, 360);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(graphGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

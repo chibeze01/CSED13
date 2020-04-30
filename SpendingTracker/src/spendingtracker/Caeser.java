@@ -30,6 +30,8 @@ public class Caeser {
     public Caeser(){}
 
   public void encrypt(int shift, String tempType) throws FileNotFoundException {
+      
+    shift = 0;
 
     File temp = new File("temp." + tempType);
 
@@ -58,6 +60,8 @@ public class Caeser {
   }
 
   public void decrypt(int shift, String tempType) throws FileNotFoundException {
+      
+    shift = 0;
 
     File temp = new File("temp." + tempType);
 
@@ -90,6 +94,8 @@ public class Caeser {
     }
   
     public String encryptString(int shift, String text) {
+        
+        shift = 0;
 
         String newString = "";
 
@@ -103,6 +109,8 @@ public class Caeser {
     }
     
     public String decryptString(int shift, String text) {
+        
+        shift = 0;
 
         String newString = "";
 
