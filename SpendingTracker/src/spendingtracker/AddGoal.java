@@ -170,7 +170,7 @@ public class AddGoal extends javax.swing.JFrame {
             sb.append('\n');
             
             // use file writer to write string to file
-            writer.write(main.caeser.encryptString(8, sb.toString()));
+            writer.write(sb.toString());
             writer.close();
             
           } catch (FileNotFoundException e) {

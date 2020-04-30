@@ -174,7 +174,7 @@ public class Goals extends javax.swing.JFrame {
             
             while ((line = br.readLine()) != null && line.split(",").length > 1) {
                 
-                line = main.caeser.decryptString(8, line);
+                line = line;
 
                 System.out.println(line);
                 
@@ -218,7 +218,7 @@ public class Goals extends javax.swing.JFrame {
             
             while ((line = br.readLine()) != null){
                 
-                line = main.caeser.decryptString(8, line);
+                line = line;
                 
                 // if not the entry we want to remove, then add to string
                 if (i == index){
@@ -240,7 +240,7 @@ public class Goals extends javax.swing.JFrame {
             FileWriter writer = new FileWriter(main.userName + "goals.csv", false);
             
             // write string to file
-            writer.write(main.caeser.encryptString(8, stringToWrite));
+            writer.write(stringToWrite);
             
             // close writer
             writer.close();
